@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EffectDefinition>
+  <Effect>
+    <Name>Wave Effect</Name>
+    <Description>Horizontal / Vertical Wave Distortion</Description>
+    <ClassID>{0A0F9B7A-5E2D-4E5F-9C11-9A1B7D3F0001}</ClassID>
+
+    <Parameters>
+
+      <Parameter>
+        <Name>Mode</Name>
+        <DisplayName>Mode</DisplayName>
+        <Type>Enum</Type>
+        <Default>Horizontal</Default>
+        <EnumValues>
+          <Value>Horizontal</Value>
+          <Value>Vertical</Value>
+        </EnumValues>
+      </Parameter>
+
+      <Parameter>
+        <Name>Period</Name>
+        <DisplayName>Period</DisplayName>
+        <Type>Float</Type>
+        <Min>-1000</Min>
+        <Max>1000</Max>
+        <Default>100</Default>
+      </Parameter>
+
+      <Parameter>
+        <Name>Magnitude</Name>
+        <DisplayName>Magnitude</DisplayName>
+        <Type>Float</Type>
+        <Min>-1000</Min>
+        <Max>1000</Max>
+        <Default>50</Default>
+      </Parameter>
+
+      <Parameter>
+        <Name>Animate</Name>
+        <DisplayName>Animate</DisplayName>
+        <Type>Boolean</Type>
+        <Default>true</Default>
+      </Parameter>
+
+    </Parameters>
+
+    <Shader>
+      <![CDATA[
+        float time = Animate ? TimelineTime : 0.0;
+
+        if (Mode == Horizontal)
+        {
+          uv.y += sin((uv.x * Period) + time) * Magnitude * 0.001;
+        }
+        else
+        {
+          uv.x += sin((uv.y * Period) + time) * Magnitude * 0.001;
+        }
+
+        return Sample(Input, uv);
+      ]]>
+    </Shader>
+
+  </Effect>
+</EffectDefinition>
