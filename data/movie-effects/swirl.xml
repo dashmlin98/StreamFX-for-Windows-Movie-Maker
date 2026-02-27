@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Effect>
+  <Name>Swirl</Name>
+  <Description>Swirl distortion effect</Description>
+  <ClassID>{B7C3F2D0-9A44-4F6E-8E21-5D3A8E9F1001}</ClassID>
+  <EffectID>{A9E4C2B1-6F3A-4E7D-9F52-8C1A7B210002}</EffectID>
+
+  <Parameters>
+    <Parameter>
+      <Name>Radius</Name>
+      <Type>float</Type>
+      <Min>0</Min>
+      <Max>1000</Max>
+      <Default>300</Default>
+    </Parameter>
+
+    <Parameter>
+      <Name>Amplitude</Name>
+      <Type>float</Type>
+      <Min>-1800</Min>
+      <Max>1800</Max>
+      <Default>360</Default>
+    </Parameter>
+
+    <Parameter>
+      <Name>Animate</Name>
+      <Type>bool</Type>
+      <Default>true</Default>
+    </Parameter>
+  </Parameters>
+
+  <Shader>
+    <![CDATA[
+    float radius;
+    float amplitude;
+    bool animate;
+    float time;
+
+    float2 Swirl(float2 uv, float2 center)
+    {
+        float2 delta = uv - center;
+        float dist = length(delta);
+
+        if (dist < radius)
+        {
+            float angle = amplitude * (radius - dist) / radius;
+            if (animate)
+                angle *= sin(time);
+
+            float s = sin(angle);
+            float c = cos(angle);
+            delta = float2(
+                delta.x * c - delta.y * s,
+                delta.x * s + delta.y * c
+            );
+        }
+        return center + delta;
+    }
+    ]]>
+  </Shader>
+</Effect><?xml version="1.0" encoding="UTF-8"?>
+<Effect>
+  <Name>Swirl</Name>
+  <Description>Swirl distortion effect</Description>
+  <ClassID>{B7C3F2D0-9A44-4F6E-8E21-5D3A8E9F1001}</ClassID>
+  <EffectID>{A9E4C2B1-6F3A-4E7D-9F52-8C1A7B210002}</EffectID>
+
+  <Parameters>
+    <Parameter>
+      <Name>Radius</Name>
+      <Type>float</Type>
+      <Min>0</Min>
+      <Max>1000</Max>
+      <Default>300</Default>
+    </Parameter>
+
+    <Parameter>
+      <Name>Amplitude</Name>
+      <Type>float</Type>
+      <Min>-1800</Min>
+      <Max>1800</Max>
+      <Default>360</Default>
+    </Parameter>
+
+    <Parameter>
+      <Name>Animate</Name>
+      <Type>bool</Type>
+      <Default>true</Default>
+    </Parameter>
+  </Parameters>
+
+  <Shader>
+    <![CDATA[
+    float radius;
+    float amplitude;
+    bool animate;
+    float time;
+
+    float2 Swirl(float2 uv, float2 center)
+    {
+        float2 delta = uv - center;
+        float dist = length(delta);
+
+        if (dist < radius)
+        {
+            float angle = amplitude * (radius - dist) / radius;
+            if (animate)
+                angle *= sin(time);
+
+            float s = sin(angle);
+            float c = cos(angle);
+            delta = float2(
+                delta.x * c - delta.y * s,
+                delta.x * s + delta.y * c
+            );
+        }
+        return center + delta;
+    }
+    ]]>
+  </Shader>
+</Effect>
