@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EffectDefinition>
+  <Name>Bulge Pinch</Name>
+  <ClassID>{7312498C-1234-4A9B-9C01-000000000001}</ClassID>
+  <Description>Bulge and Pinch distortion with animation toggle</Description>
+
+  <Parameters>
+    <Parameter>
+      <Name>Amplitude</Name>
+      <Type>float</Type>
+      <Default>0</Default>
+      <Min>-1000</Min>
+      <Max>1000</Max>
+    </Parameter>
+
+    <Parameter>
+      <Name>Radius</Name>
+      <Type>float</Type>
+      <Default>200</Default>
+      <Min>-1000</Min>
+      <Max>1000</Max>
+    </Parameter>
+
+    <Parameter>
+      <Name>Animate</Name>
+      <Type>bool</Type>
+      <Default>false</Default>
+    </Parameter>
+  </Parameters>
+
+  <Shader>
+    <Code>
+      <![CDATA[
+      float time = Animate ? fTime : 0.0;
+      float amp = Amplitude * (Animate ? sin(time) : 1.0);
+
+      float2 center = float2(0.5, 0.5);
+      float2 uv = TexCoord;
+      float2 dir = uv - center;
+      float dist = length(dir);
+
+      float factor = 1.0;
+      if (Radius != 0.0)
+      {
+        factor = 1.0 + amp * exp(-(dist * dist) / abs(Radius));
+      }
+
+      float2 resultUV = center + dir * factor;
+      OutputColor = Sample(InputTexture, resultUV);
+      ]]>
+    </Code>
+  </Shader>
+</EffectDefinition>
