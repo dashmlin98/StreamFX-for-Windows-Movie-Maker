@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VideoEffect>
+  <Name>ZigZag Distortion</Name>
+  <Description>Zigzag distortion with amplitude, frequency and animation toggle</Description>
+  <Author>Custom</Author>
+  <Copyright>None</Copyright>
+
+  <Param Name="Amplitude" Type="float" Default="0.0" Min="-1000.0" Max="1000.0" />
+  <Param Name="Frequency" Type="float" Default="10.0" Min="-1000.0" Max="1000.0" />
+  <Param Name="Animate" Type="bool" Default="true" />
+
+  <Shader>
+    <![CDATA[
+    sampler2D inputTexture : register(s0);
+
+    float Amplitude;
+    float Frequency;
+    bool Animate;
+    float Time;
+
+    float4 main(float2 uv : TEXCOORD0) : COLOR0
+    {
+        float y = uv.y;
+        float phase = uv.y * Frequency * 6.2831853;
+
+        if (Animate)
+        {
+            phase += Time;
+        }
+
+        float offset = sin(phase) * (Amplitude / 1000.0);
+        uv.x += offset;
+
+        return tex2D(inputTexture, uv);
+    }
+    ]]>
+  </Shader>
+</VideoEffect>
