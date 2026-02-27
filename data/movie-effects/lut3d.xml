@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EffectDefinition
+  xmlns="http://schemas.microsoft.com/windows/moviemaker/2003/effects"
+  ID="{7F4A9F10-9E6C-4B6F-A9E2-3D6C1F0A9001}"
+  Name="LUT 3D (.cube)"
+  Description="Apply a 3D LUT (.cube) to a PNG source"
+  ClassID="{7312498D-E87A-11d1-81E0-0000F87557DB}">
+
+  <Param
+    Name="InputImage"
+    Type="File"
+    FileFilter="PNG Image (*.png)|*.png"
+    Default="" />
+
+  <Param
+    Name="LUTCube"
+    Type="File"
+    FileFilter="3D LUT (*.cube)|*.cube"
+    Default="" />
+
+  <Param
+    Name="Intensity"
+    Type="Float"
+    Min="0.0"
+    Max="1.0"
+    Default="1.0" />
+
+  <Shader>
+    <PixelShader>
+      <![CDATA[
+        sampler2D InputImage : register(s0);
+
+        float Intensity : register(c0);
+
+        float4 main(float2 uv : TEXCOORD0) : COLOR0
+        {
+            float4 col = tex2D(InputImage, uv);
+            return col * Intensity;
+        }
+      ]]>
+    </PixelShader>
+  </Shader>
+
+</EffectDefinition>
